@@ -1,11 +1,23 @@
 namespace UserRegistration.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class UserRegistrationServiceTests
     {
         [TestMethod]
-        public void TestMethod1()
+
+        public void RegisterUser_WithValidData_ShouldReturnTrue()
         {
+            // Arrange
+            var service = new UserRegistrationService();
+            var userName = "JohnDoe";
+            var password = "abc123";
+            var email = "john.doe@gmail.com";
+
+            // Act
+            var result = service.RegisterUser(userName, password, email);
+
+            // Assert
+            Assert.IsTrue(result);
         }
     }
 }
