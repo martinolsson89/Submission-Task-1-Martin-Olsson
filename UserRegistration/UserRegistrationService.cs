@@ -2,12 +2,19 @@
 {
     public class UserRegistrationService
     {
-        private readonly List<User> _users = new List<User>();
+        public List<User> _users = new List<User>();
 
         public bool RegisterUser(string userName, string password, string email)
         {
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(email))
+            {
+                return false;
+            }
 
-            return false;
+            var user = new User(userName, password, email);
+            _users.Add(user);
+
+            return true;
         }
 
         

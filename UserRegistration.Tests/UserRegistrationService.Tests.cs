@@ -5,7 +5,7 @@ namespace UserRegistration.Tests
     {
         [TestMethod]
 
-        public void RegisterUser_WithValidData_ShouldReturnTrue()
+        public void RegisterUser_WithValidData_ShouldReturnTrue_AndCountOfOne()
         {
             // Arrange
             var service = new UserRegistrationService();
@@ -18,6 +18,7 @@ namespace UserRegistration.Tests
 
             // Assert
             Assert.IsTrue(result);
+            Assert.AreEqual(1, service._users.Count);
         }
     }
 }
