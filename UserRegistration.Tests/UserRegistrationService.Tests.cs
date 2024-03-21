@@ -22,12 +22,16 @@ namespace UserRegistration.Tests
         }
 
         // Username must be between 5 and 20 characters long, only alphanumeric characters are allowed.
-        [TestMethod]
-        public void ValidateUserName_WithValidUserName_ShouldReturnTrue()
+        [DataRow("JohnD")]
+        [DataRow("MaryJaneParker")]
+        [DataRow("MarkTwain123")]
+        [DataRow("1234567")]
+        [DataTestMethod]
+        public void ValidateUserName_WithValidUserName_ShouldReturnTrue(string userName)
         {
             // Arrange
             var service = new UserRegistrationService();
-            var userName = "JohnDoe";
+            
 
             // Act
             var result = service.ValidateUserName(userName);
@@ -35,5 +39,23 @@ namespace UserRegistration.Tests
             // Assert
             Assert.IsTrue(result);
         }
+
+        [DataRow("John")]
+        [DataRow("MaryJaneParkerSmithJohnson")]
+        [DataRow("MarkTwain@£$€!!")]
+        [DataRow("")]
+        [DataTestMethod]
+        public void ValidateUserName_WithInvalidUserName_ShouldReturnFalse(string userName)
+        {
+            // Arrange
+            var service = new UserRegistrationService();
+
+            // Act
+            var result = service.ValidateUserName(userName);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
     }
+
 }
