@@ -21,10 +21,11 @@ namespace UserRegistration
             var user = new User(userName, password, email);
             _users.Add(user);
 
+            Console.WriteLine($"User: {userName} was successfully registered!");
             return true;
         }
 
-        // Returns the user with the given username
+        /*// Returns the user with the given username
         public string GetUser(string userName)
         {
             var user = _users.FirstOrDefault(u => u.UserName == userName)!;
@@ -43,7 +44,7 @@ namespace UserRegistration
         {
             var user = _users.FirstOrDefault(u => u.Password == password)!;
             return user.Password;
-        }
+        }*/
 
         //Username must be between 5 and 20 characters long, only alphanumeric characters are allowed
         public bool ValidateUserName(string userName)

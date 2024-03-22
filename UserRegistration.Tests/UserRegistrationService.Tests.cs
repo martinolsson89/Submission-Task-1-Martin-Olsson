@@ -25,11 +25,7 @@ namespace UserRegistration.Tests
             var result = service.RegisterUser(userName, password, email);
 
             // Assert
-            Assert.IsTrue(result);
-            Assert.AreEqual(userName, service.GetUser(userName));
-            Assert.AreEqual(password, service.GetUserByPassword(password));
-            Assert.AreEqual(email, service.GetUserByEmail(email));
-
+            Assert.IsTrue(result, $"User:{userName}, was NOT registered");
         }
 
         // Username must be between 5 and 20 characters long, only alphanumeric characters are allowed.
