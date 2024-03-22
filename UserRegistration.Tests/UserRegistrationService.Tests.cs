@@ -3,14 +3,22 @@ namespace UserRegistration.Tests
     [TestClass]
     public class UserRegistrationServiceTests
     {
+
+        private UserRegistrationService service;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            service = new UserRegistrationService();
+        }
+
         [TestMethod]
 
-        public void RegisterUser_AddUserInformation_ShouldReturnTrueAndValidationOfDataAdded()
+        public void RegisterUser_AddUser_ShouldReturnTrueAndConfirmationMessage()
         {
             // Arrange
-            var service = new UserRegistrationService();
-            var userName = "JohnDoe";
-            var password = "abc123";
+            var userName = "JohnDoe1";
+            var password = "Password!";
             var email = "john.doe@gmail.com";
 
             // Act
@@ -32,10 +40,6 @@ namespace UserRegistration.Tests
         [DataTestMethod]
         public void ValidateUserName_WithValidUserName_ShouldReturnTrue(string userName)
         {
-            // Arrange
-            var service = new UserRegistrationService();
-            
-
             // Act
             var result = service.ValidateUserName(userName);
 
@@ -50,9 +54,6 @@ namespace UserRegistration.Tests
         [DataTestMethod]
         public void ValidateUserName_WithInvalidUserName_ShouldReturnFalse(string userName)
         {
-            // Arrange
-            var service = new UserRegistrationService();
-
             // Act
             var result = service.ValidateUserName(userName);
 
@@ -66,9 +67,6 @@ namespace UserRegistration.Tests
         [DataTestMethod]
         public void ValidatePassword_WithInvalidPassword_ShouldReturnFalse(string password)
         {
-            // Arrange
-            var service = new UserRegistrationService();
-
             // Act
             var result = service.ValidatePassword(password);
 
@@ -83,9 +81,6 @@ namespace UserRegistration.Tests
         [DataTestMethod]
         public void ValidatePassword_WithValidPassword_ShouldReturnTrue(string password)
         {
-            // Arrange
-            var service = new UserRegistrationService();
-
             // Act
             var result = service.ValidatePassword(password);
 
@@ -101,9 +96,6 @@ namespace UserRegistration.Tests
         [DataTestMethod]
         public void ValidateEmail_WithInvalidEmail_ShouldReturnFalse(string email)
         {
-            // Arrange
-            var service = new UserRegistrationService();
-
             // Act
             var result = service.ValidateEmail(email);
 
@@ -118,9 +110,6 @@ namespace UserRegistration.Tests
         [DataTestMethod]
         public void ValidateEmail_WithValidEmail_ShouldReturnTrue(string email)
         {
-            // Arrange
-            var service = new UserRegistrationService();
-
             // Act
             var result = service.ValidateEmail(email);
 
@@ -129,15 +118,14 @@ namespace UserRegistration.Tests
         }
 
         [TestMethod]
-        public void RegisterUser_ExistingUser_Failure()
+        public void RegisterUser_ExistingUser_ReturnsFalse()
         {
             // Arrange
-            var service = new UserRegistrationService();
-            var userName = "JohnDoe!";
-            var userName2 = "johndoe!";
+            var userName = "JohnDoe1";
+            var userName2 = "johndoe1";
 
             // Act
-            service.RegisterUser(userName, "abc123", "john@gmail.com");
+            service.RegisterUser(userName, "Password!", "john@gmail.com");
             var result = service.IsUsernameUnique(userName2);
 
             Assert.IsFalse(result);

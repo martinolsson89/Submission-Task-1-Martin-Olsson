@@ -8,7 +8,12 @@ namespace UserRegistration
 
         public bool RegisterUser(string userName, string password, string email)
         {
-            if (!ValidateUserName(userName) || !ValidatePassword(password) || !ValidateEmail(email) || !IsUsernameUnique(userName))
+            if (!ValidateUserName(userName) || !ValidatePassword(password) || !ValidateEmail(email))
+            {
+                return false;
+            }
+
+            if (!IsUsernameUnique(userName))
             {
                 return false;
             }
