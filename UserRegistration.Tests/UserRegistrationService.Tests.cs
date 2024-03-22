@@ -128,6 +128,21 @@ namespace UserRegistration.Tests
             Assert.IsTrue(result);
         }
 
+        [TestMethod]
+        public void RegisterUser_ExistingUser_Failure()
+        {
+            // Arrange
+            var service = new UserRegistrationService();
+            var userName = "JohnDoe!";
+            var userName2 = "johndoe!";
+
+            // Act
+            service.RegisterUser(userName, "abc123", "john@gmail.com");
+            var result = service.IsUsernameUnique(userName2);
+
+            Assert.IsFalse(result);
+        }
+
     }
 
 }

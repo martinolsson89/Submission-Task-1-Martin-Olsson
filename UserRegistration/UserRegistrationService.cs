@@ -8,6 +8,11 @@ namespace UserRegistration
 
         public bool RegisterUser(string userName, string password, string email)
         {
+            if (!ValidateUserName(userName) || !ValidatePassword(password) || !ValidateEmail(email) || !IsUsernameUnique(userName))
+            {
+                return false;
+            }
+
             var user = new User(userName, password, email);
             _users.Add(user);
 
@@ -86,6 +91,17 @@ namespace UserRegistration
             if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
                 return false;
+            }
+
+            return true;
+        }
+
+        public bool IsUsernameUnique(string userName)
+        {
+            //User lambda expression to check if username already exists even if it is in different case
+            if (_users.Any(u => u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return false; // Username already exists.
             }
 
             return true;
