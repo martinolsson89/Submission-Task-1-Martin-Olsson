@@ -12,29 +12,13 @@ namespace UserRegistration.Tests
             service = new UserRegistrationService();
         }
 
-        [TestMethod]
-
-        public void RegisterUser_AddUser_ShouldReturnTrueAndConfirmationMessage()
-        {
-            // Arrange
-            var userName = "JohnDoe1";
-            var password = "Password!";
-            var email = "john.doe@gmail.com";
-
-            // Act
-            var result = service.RegisterUser(userName, password, email);
-
-            // Assert
-            Assert.IsTrue(result, $"User:{userName}, was NOT registered");
-        }
-
         // Username must be between 5 and 20 characters long, only alphanumeric characters are allowed.
         [DataRow("JohnD")]
         [DataRow("MaryJaneParker")]
         [DataRow("MarkTwain123")]
         [DataRow("1234567")]
         [DataTestMethod]
-        public void ValidateUserName_WithValidUserName_ShouldReturnTrue(string userName)
+        public void IsUsernameValid_WithValidUsername_ShouldReturnTrue(string userName)
         {
             // Act
             var result = service.ValidateUserName(userName);
@@ -48,23 +32,10 @@ namespace UserRegistration.Tests
         [DataRow("MarkTwain@£$€!!")]
         [DataRow("")]
         [DataTestMethod]
-        public void ValidateUserName_WithInvalidUserName_ShouldReturnFalse(string userName)
+        public void IsUsernameValid_WithInvalidUserName_ShouldReturnFalse(string userName)
         {
             // Act
             var result = service.ValidateUserName(userName);
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [DataRow("pass")]
-        [DataRow("password123")]
-        [DataRow("")]
-        [DataTestMethod]
-        public void ValidatePassword_WithInvalidPassword_ShouldReturnFalse(string password)
-        {
-            // Act
-            var result = service.ValidatePassword(password);
 
             // Assert
             Assert.IsFalse(result);
@@ -84,27 +55,27 @@ namespace UserRegistration.Tests
             Assert.IsTrue(result);
         }
 
-        // Email must contain an @ symbol and .com OR .se OR .net OR .org
+        [DataRow("pass")]
+        [DataRow("password123")]
         [DataRow("")]
-        [DataRow("john.doe")]
-        [DataRow("john.doe@")]
-        [DataRow("john.doe@gmail")]
         [DataTestMethod]
-        public void ValidateEmail_WithInvalidEmail_ShouldReturnFalse(string email)
+
+        public void IsPasswordValid_WithInvalidPassword_ShouldReturnFalse(string password)
         {
             // Act
-            var result = service.ValidateEmail(email);
+            var result = service.ValidatePassword(password);
 
             // Assert
             Assert.IsFalse(result);
         }
 
+        // Email must contain an @ symbol and .com OR .se OR .net OR .org
         [DataRow("john.doe@gmail.com")]
         [DataRow("mary.jane@yahoo.net")]
         [DataRow("kim@hotmail.se")]
         [DataRow("jim@email.org")]
         [DataTestMethod]
-        public void ValidateEmail_WithValidEmail_ShouldReturnTrue(string email)
+        public void IsEmailValid_WithValidEmail_ShouldReturnTrue(string email)
         {
             // Act
             var result = service.ValidateEmail(email);
@@ -113,8 +84,23 @@ namespace UserRegistration.Tests
             Assert.IsTrue(result);
         }
 
+        [DataRow("")]
+        [DataRow("john.doe")]
+        [DataRow("john.doe@")]
+        [DataRow("john.doe@gmail")]
+        [DataTestMethod]
+        public void IsEmailValid_WithInvalidEmail_ShouldReturnFalse(string email)
+        {
+            // Act
+            var result = service.ValidateEmail(email);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        // Username must be unique
         [TestMethod]
-        public void RegisterUser_ExistingUser_ReturnsFalse()
+        public void RegisterUser_WithExistingUsername_ShouldReturnFalse()
         {
             // Arrange
             var userName = "JohnDoe1";
@@ -125,6 +111,56 @@ namespace UserRegistration.Tests
             var result = service.IsUsernameUnique(userName2);
 
             Assert.IsFalse(result);
+        }
+
+
+        // RegisterUser should return true and a confirmation message if the user was successfully registered with valid data.
+        [TestMethod]
+        public void RegisterUser_WithValidData_ShouldReturnAndWriteOutConfirmationMessage()
+        {
+            // Arrange
+            var userName = "JohnDoe1";
+            var password = "Password!";
+            var email = "john.doe@gmail.com";
+
+            // Act
+            var result = service.RegisterUser(userName, password, email);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        // RegisterUser with invalid Data should return false.
+        [TestMethod]
+        public void RegisterUser_WithInvalidData_ShouldReturnFalse()
+        {
+            // Arrange
+            var userName = "John";
+
+            // Act
+            var result = service.RegisterUser(userName, "Password!", "john@gmail");
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        //Check if the user was added to the list of users
+        public void RegisterUser_WithValidData_ShouldAddUserToListOfUsers()
+        {
+            // Arrange
+            var userName = "MaryJane2";
+            var password = "Spiderman!";
+            var email = "mary@yahoo.se";
+
+            // Act
+            service.RegisterUser(userName, password, email);
+            var registeredUser = service.GetUser(userName);
+
+
+            // Assert
+            Assert.AreEqual(userName, registeredUser);
+
         }
 
     }

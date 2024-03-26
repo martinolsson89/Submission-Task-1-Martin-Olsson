@@ -6,47 +6,8 @@ namespace UserRegistration
     {
         private readonly List<User> _users = [];
 
-        public bool RegisterUser(string userName, string password, string email)
-        {
-            if (!ValidateUserName(userName) || !ValidatePassword(password) || !ValidateEmail(email))
-            {
-                return false;
-            }
 
-            if (!IsUsernameUnique(userName))
-            {
-                return false;
-            }
-
-            var user = new User(userName, password, email);
-            _users.Add(user);
-
-            Console.WriteLine($"User: {userName} was successfully registered!");
-            return true;
-        }
-
-        /*// Returns the user with the given username
-        public string GetUser(string userName)
-        {
-            var user = _users.FirstOrDefault(u => u.UserName == userName)!;
-            return user.UserName;
-        }
-
-        // Returns the user with the given email
-        public string GetUserByEmail(string email)
-        {
-            var user = _users.FirstOrDefault(u => u.Email == email)!;
-            return user.Email;
-        }
-
-        // Returns the user with the given password
-        public string GetUserByPassword(string password)
-        {
-            var user = _users.FirstOrDefault(u => u.Password == password)!;
-            return user.Password;
-        }*/
-
-        //Username must be between 5 and 20 characters long, only alphanumeric characters are allowed
+        // Validates the username
         public bool ValidateUserName(string userName)
         {
             if (string.IsNullOrEmpty(userName))
@@ -67,6 +28,8 @@ namespace UserRegistration
             return true;
         }
 
+
+        // Validates the password
         public bool ValidatePassword(string password)
         {
             if (string.IsNullOrEmpty(password))
@@ -78,6 +41,7 @@ namespace UserRegistration
             {
                 return false;
             }
+            // Check if password contains at least one special character
             if (!Regex.IsMatch(password, @"[!@#$%^&*()_+=\[{\]};:<>|./?,-]"))
             {
                 return false;
@@ -86,6 +50,7 @@ namespace UserRegistration
             return true;
         }
 
+        // Validates the email
         public bool ValidateEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
@@ -93,7 +58,7 @@ namespace UserRegistration
                 return false;
             }
 
-            //Email must contain an @ symbol and .com OR .se OR .net OR .org
+            // Check if Email contains an @ symbol and .com OR .se OR .net OR .org
             if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
                 return false;
@@ -102,6 +67,7 @@ namespace UserRegistration
             return true;
         }
 
+        //Checks if the username is unique
         public bool IsUsernameUnique(string userName)
         {
             //User lambda expression to check if username already exists even if it is in different case
@@ -110,11 +76,38 @@ namespace UserRegistration
                 return false; // Username already exists.
             }
 
+            return true; // Username is unique.
+        }
+
+        // Registers a new user with the given username, password and email
+        public bool RegisterUser(string userName, string password, string email)
+        {
+            if (!ValidateUserName(userName) || !ValidatePassword(password) || !ValidateEmail(email))
+            {
+                Console.WriteLine($"User: {userName} was NOT registered");
+                return false;
+                
+            }
+
+            if (!IsUsernameUnique(userName))
+            {
+                Console.WriteLine($"User: {userName} was NOT registered");
+                return false;
+            }
+
+            var user = new User(userName, password, email); // Create a new user
+            _users.Add(user); // Add the user to the list of users
+
+            Console.WriteLine($"User: {userName} was successfully registered!"); // Print a confirmation message
             return true;
         }
 
-
-
+        // Returns the user with the given username
+        public string GetUser(string userName)
+        {
+            var user = _users.FirstOrDefault(u => u.UserName == userName)!;
+            return user.UserName;
+        }
         
     }
 }
