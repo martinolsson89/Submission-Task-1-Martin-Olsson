@@ -18,7 +18,7 @@ namespace UserRegistration.Tests
         [DataRow("MarkTwain123")]
         [DataRow("1234567")]
         [DataTestMethod]
-        public void IsUsernameValid_WithValidUsername_ShouldReturnTrue(string userName)
+        public void ValidateUserName_WithValidUsername_ShouldReturnTrue(string userName)
         {
             // Act
             var result = service.ValidateUserName(userName);
@@ -32,7 +32,7 @@ namespace UserRegistration.Tests
         [DataRow("MarkTwain@£$€!!")]
         [DataRow("")]
         [DataTestMethod]
-        public void IsUsernameValid_WithInvalidUserName_ShouldReturnFalse(string userName)
+        public void ValidateUserName_WithInvalidUsername_ShouldReturnFalse(string userName)
         {
             // Act
             var result = service.ValidateUserName(userName);
@@ -60,7 +60,7 @@ namespace UserRegistration.Tests
         [DataRow("")]
         [DataTestMethod]
 
-        public void IsPasswordValid_WithInvalidPassword_ShouldReturnFalse(string password)
+        public void ValidatePassword_WithInvalidPassword_ShouldReturnFalse(string password)
         {
             // Act
             var result = service.ValidatePassword(password);
@@ -75,7 +75,7 @@ namespace UserRegistration.Tests
         [DataRow("kim@hotmail.se")]
         [DataRow("jim@email.org")]
         [DataTestMethod]
-        public void IsEmailValid_WithValidEmail_ShouldReturnTrue(string email)
+        public void ValidateEmailAddress_WithValidEmail_ShouldReturnTrue(string email)
         {
             // Act
             var result = service.ValidateEmail(email);
@@ -89,7 +89,7 @@ namespace UserRegistration.Tests
         [DataRow("john.doe@")]
         [DataRow("john.doe@gmail")]
         [DataTestMethod]
-        public void IsEmailValid_WithInvalidEmail_ShouldReturnFalse(string email)
+        public void ValidateEmailAddress_WithInvalidEmail_ShouldReturnFalse(string email)
         {
             // Act
             var result = service.ValidateEmail(email);
@@ -113,6 +113,24 @@ namespace UserRegistration.Tests
             Assert.IsFalse(result);
         }
 
+        // Check if the user was added to the list of users
+        [TestMethod]
+        public void RegisterUser_ValidateThatUserDataIsRegistered_ListDataShouldEqualUsername()
+        {
+            // Arrange
+            var userName = "MaryJane2";
+            var password = "Spiderman!";
+            var email = "mary@yahoo.se";
+
+            // Act
+            service.RegisterUser(userName, password, email);
+            var registeredUser = service.GetUser(userName);
+
+
+            // Assert
+            Assert.AreEqual(userName, registeredUser);
+
+        }
 
         // RegisterUser should return true and a confirmation message if the user was successfully registered with valid data.
         [TestMethod]
@@ -144,24 +162,6 @@ namespace UserRegistration.Tests
             Assert.IsFalse(result);
         }
 
-        // Check if the user was added to the list of users
-        [TestMethod]
-        public void RegisterUser_WithValidData_ShouldAddUserToListOfUsers()
-        {
-            // Arrange
-            var userName = "MaryJane2";
-            var password = "Spiderman!";
-            var email = "mary@yahoo.se";
-
-            // Act
-            service.RegisterUser(userName, password, email);
-            var registeredUser = service.GetUser(userName);
-
-
-            // Assert
-            Assert.AreEqual(userName, registeredUser);
-
-        }
 
     }
 
