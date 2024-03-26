@@ -130,7 +130,7 @@ namespace UserRegistration.Tests
             Assert.IsTrue(result);
         }
 
-        // RegisterUser with invalid Data should return false.
+        // RegisterUser with invalid Data should return false which means that user was not registered.
         [TestMethod]
         public void RegisterUser_WithInvalidData_ShouldReturnFalse()
         {
@@ -144,8 +144,8 @@ namespace UserRegistration.Tests
             Assert.IsFalse(result);
         }
 
+        // Check if the user was added to the list of users
         [TestMethod]
-        //Check if the user was added to the list of users
         public void RegisterUser_WithValidData_ShouldAddUserToListOfUsers()
         {
             // Arrange
