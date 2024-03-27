@@ -84,14 +84,14 @@ namespace UserRegistration
         {
             if (!ValidateUserName(userName) || !ValidatePassword(password) || !ValidateEmail(email))
             {
-                Console.WriteLine($"User: {userName} was NOT registered");
+                Console.WriteLine($"User: {userName} was NOT registered, please check your input data (username, password and email)");
                 return false;
                 
             }
 
             if (!IsUsernameUnique(userName))
             {
-                Console.WriteLine($"User: {userName} was NOT registered");
+                Console.WriteLine($"User: {userName} was NOT registered, due to username is already taken.");
                 return false;
             }
 
@@ -108,6 +108,7 @@ namespace UserRegistration
             var user = _users.FirstOrDefault(u => u.UserName == userName)!;
             return user.UserName;
         }
+
         
     }
 }

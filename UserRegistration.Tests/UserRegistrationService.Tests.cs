@@ -162,6 +162,20 @@ namespace UserRegistration.Tests
             Assert.IsFalse(result);
         }
 
+        //Write a test that tries to break the code
+        [TestMethod]
+        public void RegisterUser_WithInvalidData_ShouldReturnFalseAndWriteOutErrorMessage()
+        {
+            // Arrange
+            var userName = "John";
+
+            // Act
+            var result = service.RegisterUser(userName, "Password!", "john@gmail");
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
     }
 
 }
