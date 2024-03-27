@@ -108,7 +108,7 @@ namespace UserRegistration.Tests
 
             // Act
             service.RegisterUser(userName, "Password!", "john@gmail.com");
-            var result = service.IsUsernameUnique(userName2);
+            var result = service.RegisterUser(userName2, "myNameIsJoe#", "john.doe@hotmail.com");
 
             Assert.IsFalse(result);
         }
@@ -161,7 +161,6 @@ namespace UserRegistration.Tests
             // Assert
             Assert.IsFalse(result);
         }
-
 
     }
 
