@@ -13,6 +13,8 @@ namespace UserRegistration.Tests
         }
 
         // Username must be between 5 and 20 characters long, only alphanumeric characters are allowed.
+
+        // Test data for ValidateUserName
         [DataRow("JohnD")]
         [DataRow("MaryJaneParker")]
         [DataRow("MarkTwain123")]
@@ -27,6 +29,8 @@ namespace UserRegistration.Tests
             Assert.IsTrue(result);
         }
 
+
+        // Test data for ValidateUserName with invalid usernames
         [DataRow("John")]
         [DataRow("MaryJaneParkerSmithJohnson")]
         [DataRow("MarkTwain@£$€!!")]
@@ -42,6 +46,7 @@ namespace UserRegistration.Tests
         }
 
         // Password must be at least 8 characters long and contain at least one special character.
+        //Test data for ValidatePassword
         [DataRow("Password!")]
         [DataRow("!#¤%&/())=?")]
         [DataRow("1234567#")]
@@ -55,6 +60,7 @@ namespace UserRegistration.Tests
             Assert.IsTrue(result);
         }
 
+        // Test data for ValidatePassword with invalid passwords
         [DataRow("pass")]
         [DataRow("password123")]
         [DataRow("")]
@@ -70,6 +76,7 @@ namespace UserRegistration.Tests
         }
 
         // Email must contain an @ symbol and .com OR .se OR .net OR .org
+        // Test data for ValidateEmailAddress
         [DataRow("john.doe@gmail.com")]
         [DataRow("mary.jane@yahoo.net")]
         [DataRow("kim@hotmail.se")]
@@ -84,6 +91,7 @@ namespace UserRegistration.Tests
             Assert.IsTrue(result);
         }
 
+        // Test data for ValidateEmailAddress with invalid emails
         [DataRow("")]
         [DataRow("john.doe")]
         [DataRow("john.doe@")]
@@ -99,6 +107,7 @@ namespace UserRegistration.Tests
         }
 
         // Username must be unique
+        // Test data for RegisterUser with existing username
         [TestMethod]
         public void RegisterUser_WithExistingUsername_ShouldReturnFalse()
         {
@@ -113,7 +122,7 @@ namespace UserRegistration.Tests
             Assert.IsFalse(result);
         }
 
-        // Check if the user was added to the list of users
+        // Verify that the user is registered with the correct data in the list.
         [TestMethod]
         public void RegisterUser_ValidateThatUserDataIsRegistered_ListDataShouldEqualUsername()
         {
