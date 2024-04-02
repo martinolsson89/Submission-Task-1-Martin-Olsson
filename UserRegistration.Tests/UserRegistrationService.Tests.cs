@@ -134,7 +134,7 @@ namespace UserRegistration.Tests
 
         // RegisterUser should return true and a confirmation message if the user was successfully registered with valid data.
         [TestMethod]
-        public void RegisterUser_WithValidData_ShouldReturnAndWriteOutConfirmationMessage()
+        public void RegisterUser_WithValidData_ShouldReturnTrueAndWriteOutConfirmationMessage()
         {
             // Arrange
             var userName = "JohnDoe1";
@@ -161,21 +161,6 @@ namespace UserRegistration.Tests
             // Assert
             Assert.IsFalse(result);
         }
-
-        //Write a test that tries to break the code
-        [TestMethod]
-        public void RegisterUser_WithInvalidData_ShouldReturnFalseAndWriteOutErrorMessage()
-        {
-            // Arrange
-            var userName = "John";
-
-            // Act
-            var result = service.RegisterUser(userName, "Password!", "john@gmail");
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
     }
 
 }

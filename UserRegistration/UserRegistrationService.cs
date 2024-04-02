@@ -98,7 +98,7 @@ namespace UserRegistration
             var user = new User(userName, password, email); // Create a new user
             _users.Add(user); // Add the user to the list of users
 
-            Console.WriteLine($"User: {userName} was successfully registered!"); // Print a confirmation message
+            Console.WriteLine($"User: {user.UserName} was successfully registered!"); // Print a confirmation message
             return true;
         }
 
